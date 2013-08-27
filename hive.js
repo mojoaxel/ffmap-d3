@@ -145,7 +145,7 @@ function handler(data) {
 
   nodesByType.forEach(function(type) {
     type.values.sort(function(a, b) {
-        return a.clients.length < b.clients.length
+        return a.clients.length - b.clients.length
       })
       .forEach(function(d, i) { d.index = i })
 
