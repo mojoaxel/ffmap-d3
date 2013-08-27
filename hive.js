@@ -137,20 +137,22 @@ function handler(data) {
   nodesByType = d3.nest()
                   .key(function(d) { return d.type })
                   .sortKeys(d3.ascending)
-                  .entries(nodes)
+                  .map(nodes)
 
-  nodesByType.push({key: 1, values: nodesByType[0].values})
-  nodesByType.push({key: 3, values: nodesByType[1].values})
-  nodesByType.push({key: 5, values: nodesByType[2].values})
+  nodesByType[1] = nodesByType[0]
+  nodesByType[3] = nodesByType[2]
+  nodesByType[5] = nodesByType[4]
 
-  nodesByType.forEach(function(type) {
-    type.values.sort(function(a, b) {
+  for (var i in nodesByType) {
+    var type = nodesByType[i]
+
+    if (type == undefined) continue
+
+    type.sort(function(a, b) {
         return a.clients.length - b.clients.length
       })
       .forEach(function(d, i) { d.index = i })
-
-    type.count = type.values.length
-  })
+  }
 
   radius.domain(d3.extent(nodes, function(d) { return d.index }))
 
@@ -214,14 +216,21 @@ function handler(data) {
       })
       .style("fill", "none")
 
+  var axes = []
+
+  for (var i in nodesByType) {
+    var type = nodesByType[i]
+    axes.push(type==undefined?0:type.length)
+  }
+
   svg.selectAll(".axis")
-      .data(nodesByType)
+      .data(axes)
     .enter().append("line")
       .attr("class", "axis")
-      .attr("transform", function(d) { return "rotate(" + degrees(angle(d.key)) + ")"; })
+      .attr("transform", function(d, i) { return "rotate(" + degrees(angle(i)) + ")"; })
       .attr("x1", radius(-3))
       .attr("x2", function(d) {
-        return radius(d.count + 2)
+        return radius(d + 2)
       })
 
   types = ["0", "1..3", ">3"]
