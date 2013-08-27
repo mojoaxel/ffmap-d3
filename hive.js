@@ -139,9 +139,9 @@ function handler(data) {
                   .sortKeys(d3.ascending)
                   .entries(nodes)
 
-  if (nodesByType[0] != undefined) nodesByType.push({key: 1, values: nodesByType[0].values})
-  if (nodesByType[1] != undefined) nodesByType.push({key: 3, values: nodesByType[1].values})
-  if (nodesByType[2] != undefined) nodesByType.push({key: 5, values: nodesByType[2].values})
+  nodesByType.push({key: 1, values: nodesByType[0].values})
+  nodesByType.push({key: 3, values: nodesByType[1].values})
+  nodesByType.push({key: 5, values: nodesByType[2].values})
 
   nodesByType.forEach(function(type) {
     type.values.sort(function(a, b) {
@@ -153,30 +153,6 @@ function handler(data) {
   })
 
   radius.domain(d3.extent(nodes, function(d) { return d.index }))
-
-  svg.selectAll(".axis")
-      .data(nodesByType)
-    .enter().append("line")
-      .attr("class", "axis")
-      .attr("transform", function(d) { return "rotate(" + degrees(angle(d.key)) + ")"; })
-      .attr("x1", radius(-3))
-      .attr("x2", function(d) {
-        return radius(d.count + 2)
-      })
-
-  types = ["0", "1..3", ">3"]
-
-  svg.selectAll(".axis-labels")
-      .data(types)
-    .enter().append("g")
-      .attr("transform", function(d, i) {
-        return "rotate(" + degrees(majAngle(i)) + ")" ; })
-      .append("text")
-      .attr("x", 20)
-      .attr("text-anchor", "middle")
-      .text(function(d) {
-        return d
-      })
 
   svg.selectAll(".link")
      .data(links)
@@ -190,7 +166,13 @@ function handler(data) {
 
            var distance = ((target - source) % 6 + 6) % 6
 
-           if (distance == 0 && link.source == d) offset = 1
+           if (distance == 0) {
+             var source_links = link.source.vpns + link.source.wifi
+             var target_links = link.target.vpns + link.target.wifi
+
+             if (source_links > target_links && link.source == d) offset = 1
+             if (source_links < target_links && link.target == d) offset = 1
+           }
 
            if (link.source == d) {
              if (source == 0) {
@@ -231,6 +213,30 @@ function handler(data) {
         else return "rgba(255,0,0,0.4)"
       })
       .style("fill", "none")
+
+  svg.selectAll(".axis")
+      .data(nodesByType)
+    .enter().append("line")
+      .attr("class", "axis")
+      .attr("transform", function(d) { return "rotate(" + degrees(angle(d.key)) + ")"; })
+      .attr("x1", radius(-3))
+      .attr("x2", function(d) {
+        return radius(d.count + 2)
+      })
+
+  types = ["0", "1..3", ">3"]
+
+  svg.selectAll(".axis-labels")
+      .data(types)
+    .enter().append("g")
+      .attr("transform", function(d, i) {
+        return "rotate(" + degrees(majAngle(i)) + ")" ; })
+      .append("text")
+      .attr("x", 20)
+      .attr("text-anchor", "middle")
+      .text(function(d) {
+        return d
+      })
 
   var nodes_enter = svg.selectAll(".node").data(nodes).enter()
 
