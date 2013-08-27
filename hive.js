@@ -175,38 +175,11 @@ function handler(data) {
              if (source_links > target_links && link.source == d) offset = 1
              if (source_links < target_links && link.target == d) offset = 1
            }
+           else if ((link.source == d && target % 2 == 0 && target == ((source + 2) % 6))
+                 || (link.target == d && source % 2 == 0 && source == ((target + 2) % 6)))
+                    offset = 1
 
-           if (link.source == d) {
-             if (source == 0) {
-               if (target == 2) offset = 1
-               if (target == 4) offset = 0
-             }
-             if (source == 2) {
-               if (target == 0) offset = 0 
-               if (target == 4) offset = 1
-             }
-             if (source == 4) {
-               if (target == 0) offset = 1 
-               if (target == 2) offset = 0
-             }
-           }
-
-           if (link.target == d) {
-             if (source == 0) {
-               if (target == 2) offset = 0 
-               if (target == 4) offset = 1
-             }
-             if (source == 2) {
-               if (target == 0) offset = 1 
-               if (target == 4) offset = 0
-             }
-             if (source == 4) {
-               if (target == 0) offset = 0 
-               if (target == 2) offset = 1
-             }
-           }
-
-           return angle((d.type + offset + 6) % 6)
+           return angle(d.type + offset)
          })
          .radius(function(d) { return radius(d.index) })
          )
