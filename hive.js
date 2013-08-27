@@ -140,18 +140,16 @@ function handler(data) {
                   .entries(nodes)
 
   if (nodesByType[0] != undefined) nodesByType.push({key: 1, values: nodesByType[0].values})
-  if (nodesByType[2] != undefined) nodesByType.push({key: 3, values: nodesByType[2].values})
-  if (nodesByType[4] != undefined) nodesByType.push({key: 5, values: nodesByType[4].values})
+  if (nodesByType[1] != undefined) nodesByType.push({key: 3, values: nodesByType[1].values})
+  if (nodesByType[2] != undefined) nodesByType.push({key: 5, values: nodesByType[2].values})
 
   nodesByType.forEach(function(type) {
-    var count = 0
     type.values.sort(function(a, b) {
-        return a.clients.length > b.clients.length
+        return a.clients.length < b.clients.length
       })
-      .forEach(function(d, i) {
-      d.index = count++
-    })
-    type.count = count - 1
+      .forEach(function(d, i) { d.index = i })
+
+    type.count = type.values.length
   })
 
   radius.domain(d3.extent(nodes, function(d) { return d.index }))
@@ -161,9 +159,9 @@ function handler(data) {
     .enter().append("line")
       .attr("class", "axis")
       .attr("transform", function(d) { return "rotate(" + degrees(angle(d.key)) + ")"; })
-      .attr("x1", radius(-2))
+      .attr("x1", radius(-3))
       .attr("x2", function(d) {
-        return radius(30)
+        return radius(d.count + 2)
       })
 
   types = ["0", "1..3", ">3"]
