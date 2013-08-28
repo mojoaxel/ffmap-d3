@@ -88,7 +88,7 @@ function degrees(radians) {
 var width = 800,
     height = 800,
     innerRadius = 60,
-    outerRadius = 400,
+    outerRadius = 350,
     majorAngle = 2 * Math.PI / 3,
     minorAngle = 1 * Math.PI / 12;
 
@@ -172,7 +172,7 @@ function handler(data) {
              var source_links = link.source.vpns + link.source.wifi
              var target_links = link.target.vpns + link.target.wifi
 
-             if (source_links > target_links && link.source == d) offset = 1
+             if (source_links >= target_links && link.source == d) offset = 1
              if (source_links < target_links && link.target == d) offset = 1
            }
            else if ((link.source == d && target % 2 == 0 && target == ((source + 2) % 6))
