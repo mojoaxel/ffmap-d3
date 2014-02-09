@@ -1,0 +1,69 @@
+{
+  "nodes":[
+    {
+      "flags":{
+        "client":false,
+        "gateway":false,
+        "online":true
+      },
+      "geo":[
+        53.873750410411425,
+        10.68796992301941
+      ],
+      "macs":"64:70:02:d1:8c:84, 66:70:02:d1:8c:84, 66:70:02:d2:8c:84",
+      "name":"Hansolu",
+      "id":"66:70:02:d1:8c:84"
+    },
+    {
+      "flags":{
+        "client":false,
+        "gateway":false,
+        "online":true
+      },
+      "geo":[
+        53.89371797220992,
+        10.651717185974121
+      ],
+      "macs":"64:70:02:f7:0d:f4, 66:70:02:f7:0d:f5, 66:70:02:f8:0d:f4",
+      "name":"Fluse083",
+      "id":"66:70:02:f7:0d:f5"
+    },
+    {
+      "flags":{
+        "client":false,
+        "gateway":false,
+        "online":true
+      },
+      "geo":[
+        53.86875,
+        10.6712898
+      ],
+      "macs":"b2:48:7a:cc:1f:fa, b0:48:7a:cb:1f:fa, b2:48:7a:cb:1f:fb",
+      "name":"BlauDirekt SW",
+      "id":"b2:48:7a:cb:1f:fb"
+    }
+  ],
+  
+  
+  "meta":{
+    "timestamp":"2014-01-23T19:31:32"
+  },
+  
+  
+  "links":[
+    {
+      "id":"66:70:02:d1:8c:84-66:70:02:f7:0d:f54",
+      "source":0,
+      "quality":"1.085, 1.085",
+      "target":1,
+      "type":null
+    },
+    {
+      "id":"66:70:02:f7:0d:f5-b2:48:7a:cb:1f:fb",
+      "source":0,
+      "quality":"1.085, 1.085",
+      "target":2,
+      "type":null
+    }
+  ]
+}
