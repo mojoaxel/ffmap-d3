@@ -1,2 +1,8 @@
-*_compiled.js
+nodes/*.png
 nodes.json
+lib/vendor/*
+node_modules/
+bower_components/
+build/
+*_compiled.js
+*.html
